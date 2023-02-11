@@ -62,8 +62,6 @@ wss.on('connection', function connection(ws) {
             }));
         }
     });
-
-    // on message error?
 });
 
 server.listen('3000', () => {
