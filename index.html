@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Client</h1>
+    <button class='subscribe' onclick="sendMessage('subscribe')">Subscribe</button>
+    <button class='unsubscribe' onclick="sendMessage('unsubscribe')">Unsubscribe</button>
+    <button class='countSubscribers' onclick="sendMessage('countSubscribers')">Count Subscribers</button>
+    <div class='currentSubscribers'>Current subscribers: 0</div>
+</body>
+
+<script>
+    const socket = new WebSocket('ws://localhost:3000/');
+
+    const message = (event) => {
+        const subscriptions = JSON.parse(event.data).subscriptions;
+        subscriptions && (document.querySelector('.currentSubscribers').textContent = `Current subscribers: ${subscriptions}`);
+    };
+    socket.addEventListener('message', message)
+
+    const sendMessage = (type) => {
+        socket.send(JSON.stringify(type));
+    }
+</script>
+
+</html>
